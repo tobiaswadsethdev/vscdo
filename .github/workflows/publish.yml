@@ -1,6 +1,8 @@
 name: Publish to VS Code Marketplace
 
 on:
+  push:
+    branches: [main]
   release:
     types: [published]
   workflow_dispatch:
@@ -35,7 +37,7 @@ jobs:
       - name: Publish to VS Code Marketplace
         run: |
           if [ "${{ github.event.inputs.pre-release }}" = "true" ]; then
-            npx vsce publish --pre-release -p ${{ secrets.VSCE_PAT }}
+            npx vsce publish --pre-release --skip-duplicate -p ${{ secrets.VSCE_PAT }}
           else
-            npx vsce publish -p ${{ secrets.VSCE_PAT }}
+            npx vsce publish --skip-duplicate -p ${{ secrets.VSCE_PAT }}
           fi
